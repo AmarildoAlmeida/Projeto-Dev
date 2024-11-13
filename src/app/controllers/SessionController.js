@@ -1,5 +1,7 @@
 import * as Yup from 'yup';
+
 import User from '../models/User';
+
 
 class SessionController {
   async store(request, response) {
@@ -42,6 +44,7 @@ return response.status(201).json({
   name: user.name,
   email,
   admin: user.admin,
+
 });   
    }
 }
