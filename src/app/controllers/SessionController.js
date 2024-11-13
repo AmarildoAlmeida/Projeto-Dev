@@ -2,7 +2,6 @@ import * as Yup from 'yup';
 
 import User from '../models/User';
 
-
 class SessionController {
   async store(request, response) {
     const schema = Yup.object({
@@ -12,41 +11,41 @@ class SessionController {
 
     const isValid = await schema.isValid(request.body);
 
-    const emailOrPasswordIncorrect = () =>{//problema 
+    const emailOrPasswordIncorrect = () => //problema {
+      
       response
         .status(401)
         .json({ error: 'Make sure your email or password are correct' });
-  }
+    //problema{;
 
-  if(!isValid) {
-    return emailOrPasswordIncorrect();
-  }
+    if (!isValid) {
+      return emailOrPasswordIncorrect();
+    }
 
     const { email, password } = request.body;
 
-const user = await User.findOne({
-  where: {
-    email,
-  },
-});
+    const user = await User.findOne({
+      where: {
+        email,
+      },
+    });
 
-if (!user) {
-  return emailOrPasswordIncorrect();
-}
-const isSamePassword = await user.checkPassword(password);
+    if (!user) {
+      return emailOrPasswordIncorrect();
+    }
+    const isSamePassword = await user.checkPassword(password);
 
-if (!isSamePassword) {
-  return emailOrPasswordIncorrect();
-}
+    if (!isSamePassword) {
+      return emailOrPasswordIncorrect();
+    }
 
-return response.status(201).json({
-  id: user.id,
-  name: user.name,
-  email,
-  admin: user.admin,
-
-});   
-   }
+    return response.status(201).json({
+      id: user.id,
+      name: user.name,
+      email,
+      admin: user.admin, 
+    });
+  }
 }
 
 export default new SessionController();
