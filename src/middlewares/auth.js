@@ -18,6 +18,7 @@ function authMiddleware(request, response, next) {
     request.userId = decoded.id;
 
     });
+  // eslint-disable-next-line no-unused-vars
   } catch (err) {
     return response.status(401).json({ error: 'Token is invalid' });
   }
