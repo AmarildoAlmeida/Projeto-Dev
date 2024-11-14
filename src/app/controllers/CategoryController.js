@@ -15,11 +15,21 @@ class CategoryController {
 
     const { name } = request.body;
 
-    const category = await Category.create({
+    const categoryExists = await Category.findOne({
+      where: {
+        name,
+      },
+    });
+
+    if (categoryExists) {
+      return response.status(400).json({erro:' Categoria já existe'});
+    }
+
+    const {id} = await Category.create({
       name,
     });
 
-    return response.status(201).json(category);
+    return response.status(201).json({id,name});
   }
   async index(request, response) {
     const categories = await Category.findAll();
@@ -28,4 +38,4 @@ class CategoryController {
   }
 }
 
-export default new  CategoryController();
+export default new CategoryController();
