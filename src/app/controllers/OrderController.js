@@ -49,7 +49,6 @@ class OrderController {
         price: product.price,
         url: product.url,
         quantity: products[productIndex].quantity,
-
       };
 
       return newProduct;
@@ -61,9 +60,12 @@ class OrderController {
         name: request.userName,
       },
       products: formattedProducts,
+      status: 'Pedido realizado',
     };
 
-    return response.status(201).json(order);
+    const createdOrder = await Order.create(order);
+
+    return response.status(201).json(createdOrder);
   }
 }
 
